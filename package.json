@@ -1,0 +1,11 @@
+{
+  "name": "mini-discord",
+  "version": "1.0.0",
+  "description": "a mini discord browser extension",
+  "main": "discord_api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TacK",
+  "license": "ISC"
+}
