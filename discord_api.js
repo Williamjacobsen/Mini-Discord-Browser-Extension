@@ -1,3 +1,5 @@
+console.clear();
+
 const Request = require("request");
 const WebSocket = require("ws");
 const config = require("./config.json");
@@ -110,6 +112,14 @@ ws.on("message", function incoming(event) {
   event = JSON.parse(event);
   if (event["op"] == 11) {
     setColor(colors.fg.yellow, "Heartbeat Received...");
+  } else if (event["t"] == "MESSAGE_CREATE") {
+    console.log(
+      `${event["d"]["author"]["username"]}: ${event["d"]["content"]} - ${event["d"]["timestamp"]} - msg-id: ${event["d"]["id"]}`
+    );
+  } else if (event["t"] == "MESSAGE_UPDATE") {
+    console.log(
+      `${event["d"]["author"]["username"]}: ${event["d"]["content"]} - ${event["d"]["timestamp"]} - msg-id: ${event["d"]["id"]}`
+    );
   } else if (event["op"] == 10) {
     setColor(colors.fg.green, "Initializing...");
     console.log(`Event OP: ${event["op"]}`);
