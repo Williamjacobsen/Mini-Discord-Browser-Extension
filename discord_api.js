@@ -5,6 +5,45 @@ const WebSocket = require("ws");
 const fs = require("fs");
 const config = require("./config.json");
 
+const colors = {
+  reset: "\x1b[0m",
+  bright: "\x1b[1m",
+  dim: "\x1b[2m",
+  underscore: "\x1b[4m",
+  blink: "\x1b[5m",
+  reverse: "\x1b[7m",
+  hidden: "\x1b[8m",
+
+  fg: {
+    black: "\x1b[30m",
+    red: "\x1b[31m",
+    green: "\x1b[32m",
+    yellow: "\x1b[33m",
+    blue: "\x1b[34m",
+    magenta: "\x1b[35m",
+    cyan: "\x1b[36m",
+    white: "\x1b[37m",
+    crimson: "\x1b[38m",
+  },
+  bg: {
+    black: "\x1b[40m",
+    red: "\x1b[41m",
+    green: "\x1b[42m",
+    yellow: "\x1b[43m",
+    blue: "\x1b[44m",
+    magenta: "\x1b[45m",
+    cyan: "\x1b[46m",
+    white: "\x1b[47m",
+    crimson: "\x1b[48m",
+  },
+};
+
+function setColor(color, msg) {
+  process.stdout.write(color);
+  console.log(msg);
+  process.stdout.write(colors.reset);
+}
+
 /* Resources
   https://discord.com/developers/docs/topics/gateway
   https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/WebSocket 
@@ -28,7 +67,7 @@ const ID = "1047213484309483582";
 */
 const AUTHORIZATION = config["user"]["Authorization"];
 
-let interval = 0;
+let activity = "BOT";
 
 const Payload = {
   op: 2,
@@ -47,7 +86,7 @@ const Payload = {
       // after 8 fucking hours :(
       activities: [
         {
-          name: "Cards Against Humanity",
+          name: activity,
           type: 0,
         },
       ],
@@ -67,18 +106,27 @@ const heartbeat = (ms) => {
 
 ws = new WebSocket("wss://gateway.discord.gg/?v=6&encoding=json");
 
-/*
-  Explain, future me...
-*/
-
 ws.addEventListener("open", (event) => {
   ws.send(JSON.stringify(Payload));
 });
 
 ws.on("message", function incoming(event) {
   event = JSON.parse(event);
-  console.log(event);
-  if (event["op"] == 10) {
+  if (event["op"] == 11) {
+    setColor(colors.fg.yellow, "Heartbeat Received...");
+  } else if (event["op"] == 10) {
+    setColor(colors.fg.green, "Initializing...");
+    console.log(`Event OP: ${event["op"]}`);
     interval = heartbeat(event["d"]["heartbeat_interval"]);
+  } else if (event["t"] == "READY" && event["op"] == 0) {
+    setColor(colors.fg.green, "Connection Ready...");
+    console.log(`Event OP: ${event["op"]}, Event T: ${event["t"]}`);
+  } else if (event["t"] == "SESSIONS_REPLACE" && event["op"] == 0) {
+    setColor(colors.fg.green, "Connection Stable...\nBot Ready...");
+    console.log(
+      `Event OP: ${event["op"]}, Event T: ${event["t"]}, Event D - Status: ${event["d"][0]["status"]}, Event S: ${event["s"]}`
+    );
+  } else {
+    console.log(event);
   }
 });
