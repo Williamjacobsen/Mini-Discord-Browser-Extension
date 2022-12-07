@@ -108,7 +108,7 @@ ws.addEventListener("open", (event) => {
   ws.send(JSON.stringify(Payload));
 });
 
-ws.on("message", function incoming(event) {
+ws.on("message", (event) => {
   event = JSON.parse(event);
   if (event["op"] == 11) {
     setColor(colors.fg.yellow, "Heartbeat Received...");
@@ -123,12 +123,12 @@ ws.on("message", function incoming(event) {
   } else if (event["op"] == 10) {
     setColor(colors.fg.green, "Initializing...");
     console.log(`Event OP: ${event["op"]}`);
-    interval = heartbeat(event["d"]["heartbeat_interval"]);
+    heartbeat(event["d"]["heartbeat_interval"]);
   } else if (event["t"] == "READY" && event["op"] == 0) {
     setColor(colors.fg.green, "Connection Ready...");
     console.log(`Event OP: ${event["op"]}, Event T: ${event["t"]}`);
   } else if (event["t"] == "SESSIONS_REPLACE" && event["op"] == 0) {
-    setColor(colors.fg.green, "Connection Stable...\nBot Ready...");
+    setColor(colors.fg.green, "Connection Stable...");
     console.log(
       `Event OP: ${event["op"]}, Event T: ${event["t"]}, Event D - Status: ${event["d"][0]["status"]}, Event S: ${event["s"]}`
     );
