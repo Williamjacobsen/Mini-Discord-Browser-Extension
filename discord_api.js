@@ -1,8 +1,5 @@
-// to look at => https://github.com/PasinduDushan/Discord-Gateway-Example/blob/main/index.js
-
 const Request = require("request");
 const WebSocket = require("ws");
-const fs = require("fs");
 const config = require("./config.json");
 
 const colors = {
@@ -49,11 +46,10 @@ function setColor(color, msg) {
   https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/WebSocket 
 */
 
-const ID = "1047213484309483582";
+// const ID = "1047213484309483582";
 
 // typing = https://discord.com/api/v9/channels/${ID}/typing
 // messages = https://discordapp.com/api/v9/channels/${ID}/messages
-// const URL = `https://discordapp.com/api/v9/channels/${ID}/messages`;
 
 /*
     Create /config.json
