@@ -23,19 +23,27 @@ body {
 .title {
   padding-top: 25px;
   font-size: 24px;
+  position: absolute;
+  right: 50px;
 }
 
 .option {
-  width: 92.5%;
+  width: 225px;
   position: absolute;
+  right: 0px;
   text-align: center;
   background-color: #2f3136;
-  border-radius: 20px;
+  border-radius: 10px;
   margin-left: 10px;
   margin-right: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
-  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5);
+}
+
+.option_menu {
+  background-color: #2f3136;
+  width: 250px;
+  height: 525px;
+  position: absolute;
+  top: -25px;
 }
