@@ -52,6 +52,7 @@ function setColor(color, msg) {
 
 // typing = https://discord.com/api/v9/channels/${ID}/typing
 // messages = https://discordapp.com/api/v9/channels/${ID}/messages
+// https://discordapp.com/api/v9/users/@me/relationships
 
 /*
     Create /config.json

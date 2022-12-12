@@ -1,6 +1,7 @@
-document.getElementById("send_message").addEventListener("click", () => {
-  document.body.style.width = "500px";
-  const optionMenu = document.createElement("div");
-  optionMenu.className = "option_menu";
-  document.body.appendChild(optionMenu);
-});
+const config = require("./config.json");
+const Discord = require("./discord.js");
+
+const AUTHORIZATION = config["user"]["Authorization"];
+
+const discord = new Discord(AUTHORIZATION);
+discord.friends();
